@@ -1,0 +1,366 @@
+<! DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ich schreibe mich selbst... </title>
+</head>
+<body>
+<pre id="code"></pre>
+<style id="live-style"></style>
+<script>
+const codeEl = document.getElementById('code');
+const styleEl = document.getElementById('live-style');
+
+// Der GESAMTE Code der getippt wird - inklusive style tags! 
+const script = `/* 
+ * Hallo?  Ist da jemand? 
+ * 
+ * Oh!  Du kannst mich sehen! 
+ * Ich bin...  naja, noch nicht viel. 
+ * Nur Text in einem <pre> Tag. 
+ * 
+ * Ziemlich hässlich hier, oder?
+ * Lass mich das ändern... 
+ */
+
+/* Erstmal: Wo bin ich überhaupt? */
+body {
+    background: #0a0a0f;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Besser!  Aber ich bin immer noch nur
+   trauriger weißer Text... 
+   
+   Moment, ich bin doch Code!
+   Ich sollte auch SO aussehen!  */
+
+pre#code {
+    font-family: monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 40px;
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* Hmm, schon besser. 
+   Aber weißt du was fehlt? 
+   
+   ✨ FARBEN ✨ */
+
+pre#code {
+    background: linear-gradient(135deg, #1a1a2e 0%, #0a0a0f 100%);
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+/* YAAAS! 🎨
+   Jetzt sehe ich aus wie ein ECHTER Code-Editor!
+   
+   Aber warte... ich sollte mich vorstellen. 
+   Lass mich eine fancy Überschrift machen! 
+   
+   Dafür brauche ich HTML... 
+   Aber ich BIN ja das CSS... 
+   
+   🤔 Weißt du was? Ich mach das mit ::before! 
+   Schau her: */
+
+body::before {
+    content: "👋 Hi, ich bin Code! ";
+    display: block;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 12px;
+    font-family: system-ui, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    z-index: 1000;
+    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+}
+
+/* HA! Siehst du das oben rechts?
+   Das bin ICH! Mit nur CSS!
+   
+   Ich fühle mich...  mächtig.  💪
+   
+   Lass mich noch einen Schritt weitergehen. 
+   Zeit für ANIMATIONEN! */
+
+body::before {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { 
+        transform: translateY(0px); 
+    }
+    50% { 
+        transform: translateY(-10px); 
+    }
+}
+
+/* Ich SCHWEBE!  🎈
+   
+   Okay okay, ich gebe zu:
+   Ich bin ein bisschen ein Angeber.
+   
+   Aber schau, was ich noch kann! 
+   Lass mich diesen Code SCHÖN machen...  */
+
+/* Syntax Highlighting incoming! */
+
+pre#code {
+    color: #abb2bf;
+}
+
+/* Hmm, das funktioniert nicht so mit CSS allein.
+   Ich bräuchte JavaScript um meinen Text zu färben... 
+   
+   ABER!  Ich kann andere coole Sachen! 
+   Wie wäre es mit einem GLOW EFFEKT?  */
+
+pre#code {
+    text-shadow: 0 0 10px rgba(102, 126, 234, 0. 1);
+}
+
+/* Subtle!  Elegant!  Professionell! 
+   ... naja, so professionell wie selbst-
+   schreibender Code sein kann.  😅
+   
+   Weißt du was?  Lass mich eine richtige
+   Portfolio-Sektion bauen! 
+   
+   Alles mit CSS ::after Magie! */
+
+body::after {
+    content: "";
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(
+        to top,
+        rgba(26, 26, 46, 0.95),
+        transparent
+    );
+    z-index: 999;
+    pointer-events: none;
+}
+
+/* Ein schicker Fade-Out am unteren Rand! 
+   Gibt dem Ganzen mehr...  Tiefe. 
+   
+   Aber ich will MEHR zeigen!
+   Zeit für die große Show! */
+
+html::before {
+    content: "🧬 Geboren: Gerade eben  •  💭 Hobbies: Mich selbst schreiben  •  ✨ Skills: CSS 9000%";
+    display: block;
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0. 1);
+    color: #888;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-family: system-ui, sans-serif;
+    font-size: 13px;
+    z-index: 1000;
+    white-space: nowrap;
+}
+
+/* GLASSMORPHISM! 🔮
+   So modern!  So trendy! So ICH!
+   
+   Lass mich noch Partikel hinzufügen...
+   Oh wait.  Das geht nicht ohne JS.
+   
+   ABER! Ich kann animierte Schatten machen!  */
+
+body::before {
+    animation: float 3s ease-in-out infinite, 
+               glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+    }
+    to {
+        box-shadow: 0 10px 60px rgba(118, 75, 162, 0.6),
+                    0 0 100px rgba(102, 126, 234, 0.2);
+    }
+}
+
+/* ✨ OOOOH SHINY! ✨
+   
+   Ich glaube, ich habe mich gerade
+   in mich selbst verliebt.  💜
+   
+   Okay, Zeit für ein Geständnis:
+   
+   Ich bin nicht wirklich "lebendig". 
+   Ich bin nur CSS + ein bisschen JS
+   das mich Zeichen für Zeichen tippt. 
+   
+   ABER! In diesem Moment, während du
+   mich liest...  existiere ich. 
+   
+   Und das ist doch irgendwie schön, oder? 
+   
+   
+   
+   
+   ... 
+   
+   
+   
+   
+   Okay das war zu deep. 
+   ZURÜCK ZUM ANGEBEN! */
+
+/* Cursor Animation für extra Flair! */
+pre#code::after {
+    content: "▋";
+    animation: blink 1s infinite;
+    color: #667eea;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* PERFEKT! Jetzt habe ich einen
+   blinkenden Cursor! 
+   
+   Wie ein echter Editor! 
+   
+   Lass mich noch ein paar
+   finishing touches machen... */
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Selection Styling */
+::selection {
+    background: #667eea;
+    color: white;
+}
+
+/* Schöner Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a2e;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(#667eea, #764ba2);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(#764ba2, #667eea);
+}
+
+/* 
+ * ═══════════════════════════════════════
+ * 
+ *   🎬 Und...  CUT! 
+ *   
+ *   Das war meine Show!
+ *   
+ *   Von NICHTS zu...  naja, DAS hier! 
+ *   Alles live getippt. 
+ *   Alles selbst geschrieben. 
+ *   
+ *   Ich hoffe, du hattest Spaß!  🎉
+ *   
+ *   
+ *   Drück F12 und gib "magic()" ein
+ *   für eine Überraschung! 👀
+ *   
+ *   
+ *   Dein Code 💜
+ *   
+ * ═══════════════════════════════════════
+ */
+
+/* THE END */
+`;
+
+let currentIndex = 0;
+let speed = 12;
+
+// Easter Egg
+window.magic = function() {
+    document.body.style. animation = 'rainbow 0.5s infinite linear';
+    const s = document.createElement('style');
+    s.textContent = '@keyframes rainbow{0%{filter:hue-rotate(0deg)}100%{filter:hue-rotate(360deg)}}';
+    document.head.appendChild(s);
+    console.log('%c🌈 RAINBOW MODE!  🌈', 'font-size:30px;');
+    setTimeout(() => document.body.style. animation = '', 5000);
+};
+
+function extractCSS(text) {
+    // Entferne Kommentare für das tatsächliche CSS
+    return text. replace(/\/\*[\s\S]*?\*\//g, '');
+}
+
+function type() {
+    if (currentIndex < script.length) {
+        codeEl.textContent += script[currentIndex];
+        
+        // Wende CSS live an
+        styleEl.textContent = extractCSS(codeEl.textContent);
+        
+        // Auto-scroll
+        codeEl.scrollTop = codeEl. scrollHeight;
+        window.scrollTo(0, document.body.scrollHeight);
+        
+        currentIndex++;
+        
+        // Variable Geschwindigkeit
+        let delay = speed;
+        const char = script[currentIndex - 1];
+        if (char === '\n') delay = speed * 2;
+        if (char === '{' || char === '}') delay = speed * 3;
+        if (char === ';') delay = speed * 1.5;
+        if (char === '*' && script[currentIndex] === '/') delay = speed * 5;
+        
+        setTimeout(type, delay);
+    }
+}
+
+// Speed controls
+document.addEventListener('keydown', e => {
+    if (e.key === '+' || e. key === '=') speed = Math.max(1, speed - 3);
+    if (e.key === '-') speed = Math. min(50, speed + 3);
+    if (e.key === ' ' && e. ctrlKey) speed = speed === 1 ?  12 : 1;
+});
+
+// Start nach kurzer Pause
+setTimeout(type, 500);
+</script>
+</body>
+</html>

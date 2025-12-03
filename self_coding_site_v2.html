@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project: Genesis v2</title>
+    <!-- Wir definieren hier direkt Styles, die NICHT getippt werden, damit das Layout sicher steht -->
+    <style>
+        body { 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Courier New', monospace; 
+            background: #f0f0f0; /* Helles Grau zu Beginn */
+            overflow: hidden; 
+            display: flex; /* WICHTIG: Flexbox für sicheres Layout */
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Linke Seite: Der Code Editor */
+        #code-container { 
+            width: 50%; 
+            height: 100%; 
+            padding: 20px; 
+            box-sizing: border-box; 
+            overflow-y: auto; 
+            white-space: pre-wrap; 
+            background: #1e1e1e; /* Dunkler Hintergrund sofort */
+            color: #00ff00; /* Matrix-Grün als Standard-Textfarbe */
+            border-right: 5px solid #333;
+        }
+
+        /* Rechte Seite: Die Vorschau */
+        #preview-container { 
+            width: 50%; 
+            height: 100%; 
+            position: relative;
+            background: #ffffff; /* Weißer Hintergrund zu Beginn */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: background 1s ease;
+        }
+
+        /* Der eigentliche Inhalt der Vorschau */
+        #app-content {
+            /* Noch kein Styling, das kommt per Code */
+            transition: all 0.5s ease;
+        }
+    </style>
+    <!-- Hier kommt das dynamische CSS rein -->
+    <style id="dynamic-style"></style>
+</head>
+<body>
+
+    <!-- Linke Seite -->
+    <div id="code-container"></div>
+    
+    <!-- Rechte Seite -->
+    <div id="preview-container">
+        <div id="app-content">
+            <!-- Initialer Inhalt, damit man sofort was sieht -->
+            <h1>Warte auf Input...</h1>
+        </div>
+    </div>
+
+<script>
+const codeContainer = document.getElementById('code-container');
+const dynamicStyle = document.getElementById('dynamic-style');
+const appContent = document.getElementById('app-content');
+const previewContainer = document.getElementById('preview-container');
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+// Funktion zum Tippen und gleichzeitigen Ausführen von CSS
+async function writeCSS(text, speed = 10) {
+    for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        dynamicStyle.innerHTML += char; // Ab ins <style> Tag
+        codeContainer.textContent += char; // Ab in den Editor
+        codeContainer.scrollTop = codeContainer.scrollHeight; // Auto-Scroll
+        
+        // Kurze Pausen für Realismus
+        if (char === '}' || char === ';') await sleep(speed * 4);
+        else if (char === '\n') await sleep(speed * 2);
+        else await sleep(speed);
+    }
+}
+
+// Funktion zum Ändern des HTML Inhalts (schnelleres Tippen simuliert)
+async function injectHTML(html) {
+    // Kleiner Kommentar im Code-Editor, dass wir HTML ändern
+    const comment = `\n<!-- INJECTING NEW HTML STRUCTURE... -->\n`;
+    codeContainer.textContent += comment;
+    await sleep(500);
+    
+    appContent.innerHTML = html;
+    
+    codeContainer.textContent += `<!-- HTML INJECTION COMPLETE -->\n\n`;
+    await sleep(500);
+}
+
+async function startShow() {
+    // Kurze Pause am Anfang
+    await sleep(1000);
+
+    // SCHRITT 1: Basis-Styling für die Vorschau ändern
+    await writeCSS(`
+/* 
+ * STATUS: Initialisierung läuft...
+ * ZIEL: Eine coole Website erschaffen.
+ * 
+ * Schritt 1: Die Umgebung anpassen.
+ * Weg mit dem langweiligen Weiß rechts.
+ */
+
+#preview-container {
+    background: #111; /* Deep Black */
+    perspective: 1000px;
+}
+
+#app-content {
+    color: white;
+    font-family: sans-serif;
+    text-align: center;
+}
+
+/* Ah, besser. Dunkler Modus ist aktiviert. */
+`);
+
+    // SCHRITT 2: Echtes HTML einfügen
+    await injectHTML(`
+        <div class="cyber-card">
+            <div class="glitch-wrapper">
+                <h1 class="glitch" data-text="CYBER_DEV">CYBER_DEV</h1>
+            </div>
+            <p>Automated System Creation</p>
+            <button class="btn">INITIALIZE</button>
+            <div class="scan-line"></div>
+        </div>
+    `);
+
+    // SCHRITT 3: Das Design der Karte (Der coole Teil)
+    await writeCSS(`
+/* 
+ * Jetzt stylen wir das HTML Element, das wir gerade eingefügt haben.
+ * Wir bauen eine holografische Karte.
+ */
+
+.cyber-card {
+    background: rgba(0, 255, 255, 0.05);
+    border: 1px solid #00ffff;
+    padding: 40px;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.2), inset 0 0 20px rgba(0, 255, 255, 0.1);
+    width: 300px;
+    position: relative;
+    backdrop-filter: blur(5px);
+    transform: rotateY(0deg);
+    transition: transform 0.3s;
+}
+
+.cyber-card:hover {
+    transform: rotateY(10deg) rotateX(5deg);
+    box-shadow: 0 0 40px rgba(0, 255, 255, 0.4);
+}
+
+h1 {
+    font-size: 3em;
+    margin: 0;
+    letter-spacing: 5px;
+    color: #fff;
+    text-shadow: 2px 2px 0px #ff00ff;
+}
+
+p {
+    color: #00ffff;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+}
+`);
+
+    // SCHRITT 4: Der Button und Animationen
+    await writeCSS(`
+/* 
+ * Interaktive Elemente brauchen Feedback.
+ * Neon-Effekte für den Button.
+ */
+
+.btn {
+    background: transparent;
+    border: 2px solid #ff00ff;
+    color: #ff00ff;
+    padding: 10px 30px;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background: #ff00ff;
+    color: #000;
+    box-shadow: 0 0 20px #ff00ff;
+}
+
+/* Scan-Line Animation für den Retro-Look */
+.scan-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.5);
+    animation: scan 3s linear infinite;
+    opacity: 0.5;
+}
+
+@keyframes scan {
+    0% { top: 0%; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+}
+
+/* FERTIG. System online. */
+`);
+
+}
+
+startShow();
+</script>
+</body>
+</html>

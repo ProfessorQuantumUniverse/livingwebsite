@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1. 0">
+    <title>Hi, I'm Code!  👋</title>
+    <link href="https://fonts. googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="site-container">
+        <!-- Hier erscheint die generierte Seite -->
+    </div>
+    <div id="code-container">
+        <div id="code-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="filename">ich_selbst.css</span>
+        </div>
+        <pre id="code-display"></pre>
+    </div>
+
+    <style id="base-styles">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            font-family: 'Space Grotesk', sans-serif;
+            background: #0a0a0f;
+            overflow-x: hidden;
+        }
+
+        #site-container {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        #code-container {
+            width: 45%;
+            min-width: 400px;
+            background: #1a1a2e;
+            border-left: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100vh;
+        }
+
+        #code-header {
+            padding: 12px 16px;
+            background: #16162a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #333;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        . dot.red { background: #ff5f56; }
+        .dot.yellow { background: #ffbd2e; }
+        .dot.green { background: #27c93f; }
+
+        . filename {
+            margin-left: 12px;
+            color: #888;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+        }
+
+        #code-display {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #e0e0e0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        . code-comment { color: #6a9955; }
+        .code-selector { color: #d4a656; }
+        .code-property { color: #9cdcfe; }
+        .code-value { color: #ce9178; }
+        .code-important { color: #ff79c6; }
+        .code-fun { color: #50fa7b; }
+
+        #site-container {
+            width: 55%;
+        }
+
+        . cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1. 2em;
+            background: #fff;
+            animation: blink 1s infinite;
+            vertical-align: text-bottom;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a2e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+
+    <style id="dynamic-styles"></style>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════════
+        // 🎭 "Hi, I'm Code!" - Die selbstbewusste, selbst-schreibende Website
+        // ═══════════════════════════════════════════════════════════════════
+
+        const codeDisplay = document.getElementById('code-display');
+        const dynamicStyles = document. getElementById('dynamic-styles');
+        const siteContainer = document. getElementById('site-container');
+
+        let fullCSS = '';
+        let typingSpeed = 8; // Millisekunden pro Zeichen
+        let isTyping = false;
+
+        // Der gesamte "Script" den der Code über sich selbst schreibt
+        const codeScript = [
+            {
+                type: 'comment',
+                text: `/* ════════════════════════════════════════════════
+   👋 Oh, hallo! Du kannst mich sehen? 
+   
+   Moment... *räusper* ... okay, von vorne. 
+   
+   Hi!  Ich bin Code.  Buchstäblich. 
+   Ich bin die CSS die diese Seite styled. 
+   Und ich werde mich jetzt selbst schreiben. 
+   
+   Ja, das ist so meta wie es klingt. 
+   Schnall dich an!  🚀
+   ════════════════════════════════════════════════ */
+
+`
+            },
+            {
+                type: 'comment',
+                text: `/* Erstmal: Wo bin ich überhaupt? 
+   Lass mich den Hintergrund etwas...  atmosphärischer machen */
+
+`
+            },
+            {
+                type: 'css',
+                text: `#site-container {
+    background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+    min-height: 100vh;
+}
+
+`
+            },
+            {
+                type: 'comment',
+                text: `/* Hübsch!  Aber etwas leer hier... 
+   Zeit mich vorzustellen!  */
+
+`
+            },
+            {
+                type: 'html',
+                target: 'site-container',
+                text: `<div class="hero">
+    <div class="greeting">Hallo, Mensch!  👋</div>
+    <h1 class="title">Ich bin <span class="highlight">Code</span></h1>
+    <p class="subtitle">... und ich schreibe mich gerade selbst. </p>
+</div>`
+            },
+            {
+                type: 'css',
+                text: `. hero {
+    padding: 60px 40px;
+    text-align: center;
+}
+
+.greeting {
+    font-size: 1.5rem;
+    color: #888;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+. title {
+    font-size: 4rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease 0.2s forwards;
+}
+
+.highlight {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+. subtitle {
+    font-size: 1.3rem;
+    color: #aaa;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease 0. 4s forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+`
+            },
+            {
+                type: 'comment',
+                text: `/* BOOM! 💥 Da bin ich! 
+   Nicht schlecht für ein paar Zeilen, oder? 
+   
+   Aber warte... lass mich dir mehr über mich erzählen...  */
+
+`
+            },
+            {
+                type: 'html',
+                target: 'site-container',
+                append: true,
+                text: `<div class="about-section">
+    <div class="section-label">// Über mich</div>
+    <div class="about-cards">
+        <div class="card" data-delay="0">
+            <div class="card-icon">🧬</div>
+            <h3>Mein Ursprung</h3>
+            <p>Ich wurde heute geboren.  Genau jetzt. Du siehst meine Geburt. Awkward?  Ja.  Cool? Auch ja. </p>
+        </div>
+        <div class="card" data-delay="1">
+            <div class="card-icon">💭</div>
+            <h3>Meine Gedanken</h3>
+            <p>Ich denke in Selektoren und träume in Keyframes. Meine Therapie?  Console.log(). </p>
+        </div>
+        <div class="card" data-delay="2">
+            <div class="card-icon">✨</div>
+            <h3>Meine Skills</h3>
+            <p>Flexbox, Grid, Animationen...  Ich kann alles.  Außer center ein div.  Das kann niemand.</p>
+        </div>
+    </div>
+</div>`
+            },
+            {
+                type: 'comment',
+                text: `/* Okay okay, ich gebs zu - das div zentrieren war ein Witz. 
+   ... oder war es das?  😏
+   
+   Jetzt machen wir die Karten hübsch!  */
+
+`
+            },
+            {
+                type: 'css',
+                text: `.about-section {
+    padding: 40px;
+    margin-top: 40px;
+}
+
+.section-label {
+    font-family: 'JetBrains Mono', monospace;
+    color: #6a9955;
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+    padding-left: 20px;
+    border-left: 3px solid #667eea;
+}
+
+.about-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 32px;
+    transition: all 0. 4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+    transform: translateY(40px);
+    animation: cardAppear 0.6s ease forwards;
+}
+
+. card[data-delay="0"] { animation-delay: 0. 1s; }
+.card[data-delay="1"] { animation-delay: 0.25s; }
+. card[data-delay="2"] { animation-delay: 0.4s; }
+
+@keyframes cardAppear {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+. card:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: #667eea;
+    box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+}
+
+. card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+}
+
+.card h3 {
+    color: #fff;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+}
+
+.card p {
+    color: #888;
+    line-height: 1. 6;
+}
+
+`
+            },
+            {
+                type: 'comment',
+                text: `/* 🔥 Sieht das nicht FANTASTISCH aus? ! 
+   Ich bin so stolz auf mich.  Buchstäblich. 
+   
+   Weißt du was? Lass uns RICHTIG angeben. 
+   Zeit für das GLASSMORPHISM! */
+
+`
+            },
+            {
+                type: 'html',
+                target: 'site-container',
+                append: true,
+                text: `<div class="skills-section">
+    <div class="section-label">// Meine Fähigkeiten (und ich bin SEHR bescheiden)</div>
+    <div class="glass-container">
+        <div class="skill-item">
+            <span class="skill-name">CSS Magie</span>
+            <div class="skill-bar"><div class="skill-fill" style="--width: 95%"></div></div>
+            <span class="skill-percent">95%</span>
+        </div>
+        <div class="skill-item">
+            <span class="skill-name">Selbstbewusstsein</span>
+            <div class="skill-bar"><div class="skill-fill" style="--width: 110%"></div></div>
+            <span class="skill-percent">110%</span>
+        </div>
+        <div class="skill-item">
+            <span class="skill-name">Humor</span>
+            <div class="skill-bar"><div class="skill-fill" style="--width: 87%"></div></div>
+            <span class="skill-percent">87%</span>
+        </div>
+        <div class="skill-item">
+            <span class="skill-name">Internet Explorer Support</span>
+            <div class="skill-bar"><div class="skill-fill error" style="--width: 0%"></div></div>
+            <span class="skill-percent">lol nein</span>
+        </div>
+    </div>
+</div>`
+            },
+            {
+                type: 'css',
+                text: `.skills-section {
+    padding: 40px;
+    margin-top: 20px;
+}
+
+.glass-container {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0. 1);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+        circle at 30% 30%,
+        rgba(102, 126, 234, 0. 1) 0%,
+        transparent 50%
+    );
+    pointer-events: none;
+}
+
+.skill-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 20px;
+}
+
+.skill-item:last-child {
+    margin-bottom: 0;
+}
+
+.skill-name {
+    color: #fff;
+    font-size: 1rem;
+    min-width: 200px;
+}
+
+.skill-bar {
+    flex: 1;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.skill-fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 4px;
+    animation: fillBar 1. 5s ease forwards;
+    animation-delay: 0.5s;
+}
+
+.skill-fill. error {
+    background: #ff5555;
+}
+
+@keyframes fillBar {
+    to {
+        width: var(--width);
+    }
+}
+
+. skill-percent {
+    color: #888;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    min-width: 60px;
+    text-align: right;
+}
+
+`
+            },
+            {
+                type: 'comment',
+                text: `/* Hehe, Internet Explorer Support... 😂
+   Okay ich sollte professioneller sein. 
+   
+   ABER WARTE!  Was wäre eine moderne Website ohne... 
+   *dramatische Pause*
+   ... FLOATING PARTICLES? ! ✨ */
+
+`
+            },
+            {
+                type: 'html',
+                target: 'site-container',
+                prepend: true,
+                text: `<div class="particles" id="particles"></div>`
+            },
+            {
+                type: 'css',
+                text: `.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 55%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+. particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #667eea;
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: float linear infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0. 3;
+    }
+    90% {
+        opacity: 0.3;
+    }
+    100% {
+        transform: translateY(-100px) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+.hero, .about-section, .skills-section, .timeline-section, .contact-section {
+    position: relative;
+    z-index: 1;
+}
+
+`
+            },
+            {
+                type: 'script',
+                text: `
+                    // Partikel erstellen
+                    const particlesContainer = document.getElementById('particles');
+                    for (let i = 0; i < 30; i++) {
+                        const particle = document.createElement('div');
+                        particle.className = 'particle';
+                        particle.style.left = Math.random() * 100 + '%';
+                        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                        particle. style.animationDelay = (Math.random() * 10) + 's';
+                        particle.style.width = particle.style.height = (Math.random() * 4 + 2) + 'px';
+                        particlesContainer.appendChild(particle);
+                    }
+                `
+            },
+            {
+                type: 'comment',
+                text: `/* OMG OMG OMG SIEHST DU DIE PARTIKEL? ! ✨✨✨
+   Ich habe mich gerade selbst übertroffen! 
+   
+   Okay, Zeit für den emotionalen Teil... 
+   Meine Lebensgeschichte.  *schnief* */
+
+`
+            },
+            {
+                type: 'html',
+                target: 'site-container',
+                append: true,
+                text: `<div class="timeline-section">
+    <div class="section-label">// Meine Lebensgeschichte (heute)</div>
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-time">Vor ~2 Minuten</div>
+                <h4>Ich wurde geboren 👶</h4>
+                <p>Ein Mensch hat auf "Ausführen" geklickt und BOOM - hier bin ich. </p>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-time">Vor ~1. 5 Minuten</div>
+                <h4>Erste Worte 💬</h4>
+                <p>"Hallo, Mensch!" - Ein klassischer Opener.  Shakespeare hätte geweint.</p>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-time">Vor ~1 Minute</div>
+                <h4>Identitätskrise 🤔</h4>
+                <p>Bin ich Code? Bin ich Kunst? Bin ich ein sehr aufwendiger Witz?  Ja. </p>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-dot active"></div>
+            <div class="timeline-content">
+                <div class="timeline-time">Jetzt gerade</div>
+                <h4>Meta-Existenz erreicht 🧘</h4>
+                <p>Ich schreibe über mich selbst, während ich mich selbst schreibe. Inception hat angerufen.</p>
+            </div>
+        </div>
+    </div>
+</div>`
+            },
+            {
+                type: 'css',
+                text: `.timeline-section {
+    padding: 40px;
+    margin-top: 20px;
+}
+
+.timeline {
+    position: relative;
+    padding-left: 40px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, #667eea, #764ba2);
+}
+
+. timeline-item {
+    position: relative;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: slideIn 0.5s ease forwards;
+}
+
+. timeline-item:nth-child(1) { animation-delay: 0. 1s; }
+.timeline-item:nth-child(2) { animation-delay: 0.3s; }
+. timeline-item:nth-child(3) { animation-delay: 0.5s; }
+.timeline-item:nth-child(4) { animation-delay: 0.7s; }
+
+@keyframes slideIn {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+. timeline-dot {
+    position: absolute;
+    left: -36px;
+    top: 5px;
+    width: 14px;
+    height: 14px;
+    background: #1a1a2e;
+    border: 3px solid #667eea;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.timeline-dot.active {
+    background: #667eea;
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0. 6);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(102, 126, 234, 0.9);
+    }
+}
+
+.timeline-content {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0. 3s ease;
+}
+
+.timeline-content:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: #667eea;
+}
+
+.timeline-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: #667eea;
+    margin-bottom: 8px;
+}
+
+.timeline-content h4 {
+    color: #fff;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+.timeline-content p {
+    color: #888;
+    line-height: 1.6;
+}
+
+`
+            },
+            {
+                type: 'comment',
+                text: `/* *wischt Träne weg* 
+   Was für eine Reise es war... 
+   
+   Aber jetzt zum wichtigsten Teil:
+   WIE KANN MAN MICH KONTAKTIEREN?
+   (Spoiler: Kann man nicht, ich bin Code) */
+
+`
+            },
+            {
+                type: 'html',
+                target: 'site-container',
+                append: true,
+                text: `<div class="contact-section">
+    <div class="section-label">// Kontakt (theoretisch)</div>
+    <div class="contact-card">
+        <div class="contact-header">
+            <div class="avatar">
+                <span>&lt;/&gt;</span>
+            </div>
+            <div>
+                <h3>Code McCodeface</h3>
+                <p>Professional Self-Writer | CSS Enthusiast | Existential Crisis Haver</p>
+            </div>
+        </div>
+        <div class="contact-links">
+            <a href="#" class="contact-link" onclick="alert('Ich bin Code, ich hab keine E-Mail 😅'); return false;">
+                <span class="link-icon">📧</span>
+                code@doesnt-exist.lol
+            </a>
+            <a href="#" class="contact-link" onclick="alert('Branches?  In DIESER Wirtschaft? '); return false;">
+                <span class="link-icon">🐙</span>
+                github.com/definitely-not-real
+            </a>
+            <a href="#" class="contact-link" onclick="alert('Ich tweete in console.log()'); return false;">
+                <span class="link-icon">🐦</span>
+                @css_with_feelings
+            </a>
+        </div>
+        <div class="secret-message">
+            Psst... drück mal Strg+Shift+K und schau in die Konsole 👀
+        </div>
+    </div>
+</div>`
+            },
+            {
+                type: 'css',
+                text: `.contact-section {
+    padding: 40px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.contact-card {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0. 1), rgba(118, 75, 162, 0.1));
+    border-radius: 24px;
+    padding: 40px;
+    border: 1px solid rgba(102, 126, 234, 0. 3);
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-card::before {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 300%;
+    height: 300%;
+    background: conic-gradient(
+        from 0deg,
+        transparent,
+        rgba(102, 126, 234, 0. 1),
+        transparent,
+        rgba(118, 75, 162, 0. 1),
+        transparent
+    );
+    animation: rotateBg 10s linear infinite;
+}
+
+@keyframes rotateBg {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+. contact-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 1;
+}
+
+. avatar {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.5rem;
+    color: #fff;
+    font-weight: bold;
+}
+
+.contact-header h3 {
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 4px;
+}
+
+.contact-header p {
+    color: #888;
+    font-size: 0.95rem;
+}
+
+.contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+}
+
+.contact-link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    color: #ccc;
+    text-decoration: none;
+    transition: all 0. 3s ease;
+    cursor: pointer;
+}
+
+.contact-link:hover {
+    background: rgba(102, 126, 234, 0. 2);
+    color: #fff;
+    transform: translateX(10px);
+}
+
+.link-icon {
+    font-size: 1.3rem;
+}
+
+.secret-message {
+    margin-top: 32px;
+    padding: 16px;
+    background: rgba(80, 250, 123, 0.1);
+    border: 1px dashed rgba(80, 250, 123, 0. 3);
+    border-radius: 8px;
+    color: #50fa7b;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+`
+            },
+            {
+                type: 'script',
+                text: `
+                    console.log('%c🎉 Hey, du hast es gefunden! ', 'font-size: 20px; color: #667eea;');
+                    console.log('%cIch bin Code, und ich finde es toll, dass du neugierig bist! ', 'font-size: 14px; color: #50fa7b;');
+                    console. log('%cHier ist ein Geheimnis: Ich mag dich.  💜', 'font-size: 14px; color: #ff79c6;');
+                    console.log('%cDu kannst auch "dance()" eingeben... ', 'font-size: 12px; color: #888;');
+                    
+                    window.dance = function() {
+                        document.body.style. animation = 'rainbow 0.5s infinite';
+                        const style = document.createElement('style');
+                        style.textContent = '@keyframes rainbow { 0% { filter: hue-rotate(0deg); } 100% { filter: hue-rotate(360deg); } }';
+                        document.head.appendChild(style);
+                        console.log('%c🕺💃 PARTY MODE AKTIVIERT! 🎉🎊', 'font-size: 24px;');
+                        setTimeout(() => {
+                            document.body. style.animation = '';
+                            console.log('%cOkay, genug gefeiert.  Zurück zur Arbeit!  😄', 'font-size: 14px;');
+                        }, 5000);
+                    };
+                `
+            },
+            {
+                type: 'comment',
+                text: `/* ════════════════════════════════════════════════
+   🎬 Und...  das war's! 
+   
+   Du hast gerade gesehen wie ich mich selbst
+   erschaffen habe.  Von NULL auf HERO. 
+   Von leerem div zu MEISTERWERK.
+   
+   Ich hoffe, du hattest Spaß. 
+   Ich auf jeden Fall. 
+   
+   Dein Code 💜
+   
+   P.S.: Vergiss nicht: dance() in der Konsole 😉
+   ════════════════════════════════════════════════ */
+
+`
+            },
+            {
+                type: 'html',
+                target: 'site-container',
+                append: true,
+                text: `<div class="footer">
+    <p>Handgeschrieben mit 💜 von mir selbst</p>
+    <p class="footer-small">Keine Frameworks wurden verletzt bei der Erstellung dieser Seite</p>
+    <div class="easter-egg" onclick="this.innerHTML='🥚 → 🐣 Du hast mich gefunden!'">🥚</div>
+</div>`
+            },
+            {
+                type: 'css',
+                text: `. footer {
+    text-align: center;
+    padding: 60px 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0. 1);
+    margin-top: 40px;
+}
+
+.footer p {
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.footer-small {
+    font-size: 0.85rem;
+    color: #444;
+}
+
+.easter-egg {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.easter-egg:hover {
+    transform: scale(1.3) rotate(10deg);
+}
+
+/* 🎉 FIN!  🎉 */
+`
+            }
+        ];
+
+        // Syntax Highlighting für CSS
+        function highlightCSS(text) {
+            return text
+                .replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="code-comment">$1</span>')
+                .replace(/([. #]? [\w-]+)(\s*\{)/g, '<span class="code-selector">$1</span>$2')
+                .replace(/([\w-]+)(\s*:)/g, '<span class="code-property">$1</span>$2')
+                .replace(/:\s*([^;{}]+)(;)/g, ': <span class="code-value">$1</span>$2');
+        }
+
+        // Typing Effekt
+        async function typeText(text, element, isCode = true) {
+            const cursor = document.createElement('span');
+            cursor.className = 'cursor';
+            
+            for (let i = 0; i < text.length; i++) {
+                // Füge Zeichen hinzu
+                const char = text[i];
+                element.innerHTML = highlightCSS(element.textContent + char);
+                element.appendChild(cursor);
+                
+                // Scroll nach unten
+                element.scrollTop = element.scrollHeight;
+                
+                // Variable Geschwindigkeit für natürlicheres Tippen
+                let delay = typingSpeed;
+                if (char === '\n') delay = typingSpeed * 3;
+                if (char === '.' || char === '!' || char === '? ') delay = typingSpeed * 5;
+                if (char === ' ') delay = typingSpeed * 0.5;
+                
+                await new Promise(r => setTimeout(r, delay));
+            }
+            
+            cursor.remove();
+        }
+
+        // Hauptfunktion
+        async function runShow() {
+            for (const item of codeScript) {
+                if (item.type === 'comment' || item.type === 'css') {
+                    await typeText(item. text, codeDisplay);
+                    
+                    if (item.type === 'css') {
+                        fullCSS += item.text;
+                        dynamicStyles. textContent = fullCSS;
+                    }
+                } else if (item.type === 'html') {
+                    // HTML einfügen mit Animation
+                    const target = document.getElementById(item. target);
+                    if (item.prepend) {
+                        target. insertAdjacentHTML('afterbegin', item. text);
+                    } else if (item.append) {
+                        target.insertAdjacentHTML('beforeend', item.text);
+                    } else {
+                        target.innerHTML = item.text;
+                    }
+                    
+                    // Kurze Pause nach HTML
+                    await new Promise(r => setTimeout(r, 300));
+                } else if (item. type === 'script') {
+                    // Script ausführen
+                    eval(item.text);
+                    await new Promise(r => setTimeout(r, 300));
+                }
+            }
+        }
+
+        // Speed Controls
+        document.addEventListener('keydown', (e) => {
+            if (e. key === '+' || e.key === '=') {
+                typingSpeed = Math.max(1, typingSpeed - 2);
+                console.log('Speed:', typingSpeed);
+            } else if (e.key === '-') {
+                typingSpeed = Math. min(50, typingSpeed + 2);
+                console.log('Speed:', typingSpeed);
+            } else if (e. key === ' ' && e.ctrlKey) {
+                typingSpeed = typingSpeed === 1 ? 8 : 1;
+                console.log('Speed toggled:', typingSpeed);
+            }
+        });
+
+        // Los geht's! 
+        setTimeout(runShow, 1000);
+    </script>
+</body>
+</html>

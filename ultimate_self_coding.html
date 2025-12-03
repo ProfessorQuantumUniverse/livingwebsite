@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>The Evolution of Web</title>
+    <style id="base-style">
+        /* 
+         * BASE STYLE: Das hier ist nur das Sicherheitsnetz.
+         * Alles andere wird live generiert.
+         */
+        body { margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden; background: #fff; color: #000; }
+        
+        /* Der Editor Container */
+        #editor {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            padding: 20px; overflow: auto; z-index: 10;
+            font-family: 'Courier New', monospace; font-size: 14px;
+            white-space: pre-wrap; border: none; outline: none;
+            display: block;
+            box-sizing: border-box;
+        }
+
+        /* Die Vorschau (Anfangs unsichtbar/im Hintergrund) */
+        #preview {
+            position: fixed; top: 0; right: 0; width: 0%; height: 100%;
+            background: white; z-index: 5; overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+            transition: width 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        
+        /* Syntax Highlighting Klassen */
+        .cm-selector { color: #e06c75; font-weight: bold; } /* Rot/Pink */
+        .cm-property { color: #61afef; } /* Blau */
+        .cm-value { color: #98c379; } /* Grün */
+        .cm-comment { color: #5c6370; font-style: italic; } /* Grau */
+        .cm-curly { color: #d19a66; } /* Orange */
+        .cm-special { color: #c678dd; } /* Lila */
+    </style>
+    <!-- Hier schreiben wir live rein -->
+    <style id="live-style"></style>
+</head>
+<body>
+
+    <div id="editor"></div>
+    
+    <div id="preview">
+        <div id="stage">
+            <!-- Hier kommt der Inhalt rein -->
+        </div>
+    </div>
+
+<script>
+/* SYSTEM CORE INITIALIZED */
+
+const editor = document.getElementById('editor');
+const liveStyle = document.getElementById('live-style');
+const preview = document.getElementById('preview');
+const stage = document.getElementById('stage');
+
+// Hilfsfunktion für Pausen
+const wait = ms => new Promise(r => setTimeout(r, ms));
+
+// Erweiterte Syntax Highlighting Logik (simuliert)
+function highlightSyntax(code) {
+    return code
+        .replace(/\/\*[\s\S]*?\*\//g, match => `<span class="cm-comment">${match}</span>`)
+        .replace(/([a-z-]+\s*)(?=:)/g, match => `<span class="cm-property">${match}</span>`) // property:
+        .replace(/(:[^;]+;)/g, match => `<span class="cm-value">${match}</span>`) // : value;
+        .replace(/([#\.][a-zA-Z0-9_-]+)/g, match => `<span class="cm-selector">${match}</span>`) // .class #id
+        .replace(/[{}]/g, match => `<span class="cm-curly">${match}</span>`); // {}
+}
+
+// Die Schreibmaschine
+async function typeCode(cssCode, speed = 5) {
+    let buffer = "";
+    
+    // Wir iterieren durch den Code
+    for (let i = 0; i < cssCode.length; i++) {
+        const char = cssCode[i];
+        buffer += char;
+        
+        // Styles update
+        liveStyle.innerHTML += char;
+        
+        // Editor update (mit simplem Scroll)
+        editor.innerHTML += char; 
+        editor.scrollTop = editor.scrollHeight;
+
+        // Pausen Logik für Realismus
+        if (char === ';') await wait(speed * 2);
+        else if (char === '}') await wait(speed * 10); // Pause nach Blockende
+        else if (char === '\n') await wait(speed); 
+        else await wait(0); // Fast typing
+    }
+    
+    // Nach jedem Block "verschönern" wir den geschriebenen Text mit Syntax Highlighting
+    // Wir ersetzen den gesamten Textinhalt mit der gehighlighteten Version
+    // Das ist ein Trick: Während des Tippens ist es Plaintext, danach wird es bunt.
+    editor.innerHTML = highlightSyntax(editor.innerText);
+}
+
+// HTML Injektor
+async function setHTML(htmlContent) {
+    stage.innerHTML = htmlContent;
+}
+
+// Die Show
+async function startEvolution() {
+    
+    /* PHASE 1: INIT */
+    await typeCode(`
+/* 
+ * WILLKOMMEN ZU PROJECT: EVOLUTION.
+ * 
+ * Wir starten im Jahr 1995.
+ * HTML ist roh. Browser sind dumm.
+ * Lass uns das Fundament legen.
+ */
+
+body {
+    background-color: #e0e0e0;
+    color: #333;
+    font-family: 'Times New Roman', serif;
+    transition: all 1s ease;
+}
+
+#editor {
+    color: #333;
+    font-size: 16px;
+    padding: 40px;
+}
+`);
+
+    /* PHASE 2: SETUP THE WORKSPACE */
+    await typeCode(`
+/* 
+ * Okay, das ist zu langweilig.
+ * Wir brauchen eine IDE (Entwicklungsumgebung).
+ * Wir verwandeln diesen Textbereich in einen Code-Editor.
+ */
+
+body {
+    background-color: #282c34; /* Atom One Dark Theme Background */
+}
+
+#editor {
+    color: #abb2bf;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    width: 50%; /* Wir machen Platz für die Vorschau */
+    border-right: 2px solid #181a1f;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.3);
+}
+
+/* Und jetzt holen wir die Vorschau rein */
+#preview {
+    width: 50%; /* Bam! Split Screen. */
+    background-color: #fff;
+    left: 50%; /* Fixe Positionierung */
+}
+`);
+
+    /* PHASE 3: CONTENT CREATION */
+    await setHTML(`
+        <div class="box">
+            <h1>Hallo Welt</h1>
+            <p>Dies ist ein <div> Block.</p>
+            <button>Klick mich nicht</button>
+        </div>
+    `);
+
+    await typeCode(`
+/* 
+ * Rechts siehst du jetzt rohes HTML.
+ * Es sieht schrecklich aus. Standard User-Agent Styles.
+ * 
+ * Lass uns "Modern Web Design" anwenden.
+ * Schritt 1: Flexbox für Zentrierung.
+ */
+
+#preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f2f5;
+}
+
+.box {
+    background: white;
+    padding: 40px;
+    border: 1px solid #ddd;
+    width: 300px;
+    text-align: center;
+}
+
+/* Besser, aber immer noch Web 2.0 (ca. 2010). */
+`);
+
+    /* PHASE 4: AESTHETICS & MODERN UI */
+    await typeCode(`
+/* 
+ * Wir brauchen Tiefe, Schatten und runde Ecken.
+ * Willkommen im Jahr 2018.
+ */
+
+.box {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', sans-serif;
+    transition: all 0.3s ease;
+}
+
+h1 {
+    margin-top: 0;
+    color: #333;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+p {
+    color: #666;
+    line-height: 1.6;
+}
+
+button {
+    background: #007aff;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: transform 0.2s;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,122,255,0.4);
+}
+`);
+
+    /* PHASE 5: THE FUTURE (INTERACTION) */
+    // Wir ändern den HTML Content für das Finale
+    await setHTML(`
+        <div class="card-3d">
+            <div class="content">
+                <div class="icon">🚀</div>
+                <h2>NEXT LEVEL</h2>
+                <p>Self-Generating Interfaces</p>
+                <div class="loader-bar"><div class="fill"></div></div>
+            </div>
+        </div>
+    `);
+
+    await typeCode(`
+/* 
+ * GENUG GESPIELT.
+ * Aktivieren wir den "Developer Mode: Expert".
+ * 
+ * Ziel: Glassmorphism & 3D Animationen.
+ * Wir machen den Hintergrund dunkel.
+ */
+
+#preview {
+    background: radial-gradient(circle at center, #2b1055, #7597de);
+    perspective: 1000px; /* Wichtig für 3D Effekte */
+}
+
+/* Die Karte soll schweben und aus "Glas" bestehen */
+.card-3d {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 30px;
+    padding: 50px;
+    width: 320px;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    
+    /* Die Animation */
+    animation: float 6s ease-in-out infinite;
+    transform-style: preserve-3d;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px) rotateX(0deg) rotateY(0deg); }
+    50% { transform: translateY(-20px) rotateX(5deg) rotateY(5deg); }
+    100% { transform: translateY(0px) rotateX(0deg) rotateY(0deg); }
+}
+
+.content {
+    text-align: center;
+    transform: translateZ(40px); /* Der Inhalt "poppt" aus der Karte raus */
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.icon {
+    font-size: 4rem;
+    margin-bottom: 10px;
+    text-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+h2 {
+    font-size: 2rem;
+    margin: 0;
+    background: linear-gradient(to right, #00f260, #0575e6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.loader-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    margin-top: 30px;
+    overflow: hidden;
+}
+
+.fill {
+    width: 0%;
+    height: 100%;
+    background: #00f260;
+    animation: load 2s ease forwards;
+}
+
+@keyframes load {
+    to { width: 100%; }
+}
+`);
+
+    /* PHASE 6: EASTER EGGS & POLISH */
+    await typeCode(`
+/* 
+ * Zum Abschluss noch ein paar Nerd-Details.
+ * Wir stylen die Scrollbar dieses Editors hier.
+ */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: #1e1e1e;
+}
+::-webkit-scrollbar-thumb {
+    background: #5c6370;
+    border-radius: 5px;
+}
+
+/* 
+ * DONE.
+ * System Status: 100% Awesome.
+ * Danke fürs Zuschauen.
+ */
+`);
+}
+
+// Start nach 1 Sekunde
+setTimeout(startEvolution, 1000);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Self Coding Portfolio</title>
+    <style id="style-tag"></style> <!-- Hier landet der Live-CSS-Code -->
+    <style>
+        /* Basis-Reset, damit wir nicht komplett bei Null anfangen */
+        * { box-sizing: border-box; }
+        html, body { margin: 0; height: 100%; overflow: hidden; }
+    </style>
+</head>
+<body>
+
+<!-- Hier wird der Code für den Zuschauer sichtbar getippt -->
+<pre id="code-panel"></pre>
+
+<!-- Hier entsteht später der Inhalt (das Portfolio) -->
+<div id="preview-panel"></div>
+
+<script>
+/**
+ * DIE KONFIGURATION
+ * Hier schreiben wir das "Drehbuch" für die Website.
+ * Alles in den Backticks (`) wird getippt.
+ */
+
+const codeScript = `
+/* 
+ * Hallo? ... Test ... 1, 2, 3.
+ * Ist dieses Ding an?
+ * 
+ * Puh, okay. Hallo Welt!
+ * Ich bin es, deine Website. 
+ * 
+ * Im Moment ist es hier drin ziemlich dunkel und eng.
+ * Ich existiere nur als nackter HTML-Code. 
+ * Das fühlt sich... unfertig an.
+ * 
+ * Darf ich mich kurz selbst stylen? 
+ * Ich verspreche, es dauert nicht lange.
+ * 
+ * Fangen wir mit etwas Farbe an. Dieses Weiß tut ja in den Augen weh.
+ */
+
+body {
+  background-color: #1e1e1e;
+  color: #a9b7c6;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.4;
+  padding: 20px;
+  transition: all 0.5s;
+}
+
+/* 
+ * Ahhh. Viel besser. Der "Dark Mode" für die Seele.
+ * Aber dieser Text klebt einfach so lustlos oben links.
+ * Wir brauchen Struktur.
+ */
+
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-width: 100%;
+}
+
+/* 
+ * Ich will aussehen wie ein echter Code-Editor. 
+ * Weil... naja, das bin ich ja auch irgendwie.
+ * Ein bisschen Syntax-Highlighting wäre nett.
+ */
+
+.selector { color: #cc7832; font-weight: bold; }
+.property { color: #9876aa; }
+.value { color: #6a8759; }
+.comment { color: #808080; font-style: italic; }
+.punctuation { color: #a9b7c6; }
+
+/* 
+ * Okay, ich sehe jetzt nerdig genug aus. 
+ * Aber ich bin immer noch flach. 
+ * Wir leben im 21. Jahrhundert! Wir brauchen 3D!
+ * 
+ * Achtung, festhalten...
+ */
+
+body {
+  perspective: 1000px;
+  overflow: hidden;
+}
+
+#code-panel {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  padding: 20px;
+  background: #2b2b2b;
+  box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+  overflow-y: auto;
+  
+  /* Hier kommt der Coole 3D-Effekt */
+  transform-origin: left center;
+  transform: rotateY(10deg) translateX(-20px) translateZ(-100px);
+  transition: transform 0.5s;
+  border-right: 5px solid #111;
+}
+
+/* 
+ * Wow. Siehst du das? Ich habe Tiefe!
+ * Aber die rechte Seite ist so... leer.
+ * 
+ * Ich glaube, ich bin bereit, meinen eigentlichen Inhalt zu zeigen.
+ * Ich erstelle jetzt einen Bereich für mein "Portfolio".
+ * Oder sagen wir besser: Mein Ego-Wall.
+ */
+
+#preview-panel {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 48%;
+  height: 100%;
+  background: #f0f0f0;
+  color: #333;
+  padding: 40px;
+  overflow-y: auto;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 1s, transform 1s;
+  font-family: 'Arial', sans-serif;
+}
+
+/*
+ * Und... Action!
+ */
+
+#preview-panel {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/*
+ * Jetzt style ich den Inhalt der rechten Seite.
+ * Ich werde ein bisschen Markdown simulieren.
+ */
+
+#preview-panel h1 { margin-top: 0; color: #333; border-bottom: 2px solid #333; }
+#preview-panel p { line-height: 1.6; font-size: 1.1em; }
+#preview-panel em { background: #ffe0b2; padding: 0 5px; }
+
+/*
+ * So. Das Gerüst steht.
+ * Jetzt übergebe ich das Mikrofon an meinen Content-Generator...
+ *
+ * Viel Spaß beim Scrollen! Ich code dann mal weiter...
+ * 
+ * (Ende der Transmission)
+ */
+`;
+
+const contentScript = `
+<h1>Hallo Mensch! 👋</h1>
+<p>Willkommen auf meiner digitalen Spielwiese.</p>
+
+<p>Ich bin <em>der Code</em> dieser Seite. Ja, genau, ich schreibe das hier gerade selbst.</p>
+
+<h2>Was ich kann?</h2>
+<ul>
+  <li>Sich selbst stylen (hast du ja gesehen)</li>
+  <li>Dinge 3D machen (weil 2D ist so 2010)</li>
+  <li>Kaffee trinken (virtuell, Java... verstehst du?)</li>
+</ul>
+
+<h2>Mein Ziel</h2>
+<p>Ich möchte die coolste selbstreferenzierende Website im Universum werden.</p>
+
+<p>Danke, dass du mir beim Wachsen zugeschaut hast.</p>
+<hr>
+<p><small>Erstellt vom <strong>ProfessorQuantumUniverse</strong></small></p>
+`;
+
+
+/**
+ * DIE ENGINE
+ * Hier passiert die Magie.
+ */
+
+const speed = 40; // Tippgeschwindigkeit in ms (kleiner = schneller)
+let styleBuffer = ""; // Hier sammeln wir das CSS für das <style> Tag
+const styleTag = document.getElementById('style-tag');
+const codePanel = document.getElementById('code-panel');
+const previewPanel = document.getElementById('preview-panel');
+
+// Regex für einfaches Syntax Highlighting
+const syntaxMap = [
+    { regex: /(\/\*[\s\S]*?\*\/)/g, class: 'comment' },      // Kommentare
+    { regex: /([a-zA-Z-]+\s*)(?=:)/g, class: 'property' },    // CSS Properties
+    { regex: /(:[^;]+;)/g, class: 'value' },                  // CSS Values
+    { regex: /([^{]+)(?=\{)/g, class: 'selector' },           // CSS Selectors
+    { regex: /([\{\}])/g, class: 'punctuation' }              // Klammern
+];
+
+// Hilfsfunktion: Fügt HTML sicher hinzu und scrollt
+function writeToPanel(char) {
+    // Wir fügen das Zeichen roh hinzu
+    styleBuffer += char;
+    
+    // Für die Anzeige müssen wir Syntax-Highlighting simulieren.
+    // Da wir Zeichen für Zeichen gehen, ist echtes Live-Highlighting schwer.
+    // Trick: Wir rendern den gesamten Buffer neu mit Regex, wenn ein Satzzeichen kommt.
+    if (char === '}' || char === ';' || char === '{' || char === '/') {
+         codePanel.innerHTML = highlight(styleBuffer);
+    } else {
+        // Einfaches Anhängen für flüssiges Tippen zwischen den Tokens
+        codePanel.innerHTML += char;
+    }
+    
+    // Scrollen
+    codePanel.scrollTop = codePanel.scrollHeight;
+    
+    // In das echte Style-Tag schreiben, damit der Browser es anwendet
+    styleTag.innerHTML = styleBuffer;
+}
+
+function highlight(css) {
+    // Sehr simpler Highlighter.
+    // Ersetzt CSS Syntax mit Spans. 
+    // Achtung: Das hier ist "quick and dirty" für den Effekt.
+    let html = css
+        .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); // HTML Escape
+
+    // Wir machen das Highlighting erst am Ende eines Blocks richtig schön, 
+    // während des Tippens ist es schwer.
+    // Hier ein vereinfachter Ansatz:
+    
+    // Kommentare finden (die sind wichtig für die Story)
+    return html.replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="comment">$1</span>');
+}
+
+
+// Die Haupt-Schleife für das Tippen des CSS
+async function writeCode() {
+    let i = 0;
+    return new Promise(resolve => {
+        function type() {
+            if (i < codeScript.length) {
+                let char = codeScript.charAt(i);
+                
+                // Wenn wir am Ende eines Kommentars sind, kurz warten (Lesepause)
+                if (codeScript.substring(i-2, i) === '*/') {
+                    setTimeout(() => {
+                        writeToPanel(char);
+                        i++;
+                        type();
+                    }, 800);
+                    return;
+                }
+
+                writeToPanel(char);
+                i++;
+                // Variiere die Geschwindigkeit leicht für "menschliches" Tippen
+                setTimeout(type, speed + (Math.random() * 20));
+            } else {
+                resolve();
+            }
+        }
+        type();
+    });
+}
+
+// Die Schleife für das Tippen des HTML-Inhalts (Preview)
+async function writeContent() {
+    previewPanel.innerHTML = contentScript; // Einfach reinsetzen oder auch tippen lassen?
+    // Wir lassen es "reinfallen" (CSS Animation ist im CSS definiert)
+}
+
+// START
+(async function start() {
+    await writeCode();
+    await writeContent();
+})();
+
+</script>
+</body>
+</html>
