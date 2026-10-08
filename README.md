@@ -1,3 +1,9 @@
+> [!NOTE]
+> **Archived – no longer maintained.** This was a personal experiment with self-writing web pages.
+> The code stays available for reference, but there will be no updates or security fixes.
+>
+> *Archiviert – wird nicht mehr gepflegt. Persönliches Experiment mit „selbst-schreibenden“ Webseiten.*
+
 <div align="center">
 
 # 🧬 Living Website
